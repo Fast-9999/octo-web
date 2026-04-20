@@ -32,3 +32,16 @@ html.lenis body {
 .lenis.lenis-smooth [data-scroll-behavior="smooth"] {
   scroll-behavior: auto !important;
 }
+
+@layer utilities {
+  /* Ẩn scrollbar cho Chrome, Safari và Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Ẩn scrollbar cho IE, Edge và Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
