@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,7 +12,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -30,12 +31,12 @@ export default function Navbar() {
 
   return (
     <>
-      {/* 💡 ĐÃ FIX: z-[100] và Kính mờ siêu thực (backdrop-saturate-150) */}
+      {/* ═══ NAVBAR CHÍNH (GIỮ NGUYÊN GIAO DIỆN DESKTOP) ═══ */}
       <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-xl backdrop-saturate-150 border-b border-[#60CBED]/20 shadow-[0_20px_40px_rgba(0,48,70,0.05)] py-2' : 'bg-transparent py-4'}`}>
         <div className="max-w-7xl mx-auto px-5 h-14 flex items-center justify-between">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity hover:scale-105 duration-300">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity active:scale-95 md:hover:scale-105 duration-300">
             <img src="https://octo.vn/img_data/images/logo/logo.png" alt="Octo." className="h-10 w-auto drop-shadow-md" />
           </Link>
 
@@ -59,52 +60,83 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Nút CTA */}
-          <Link href="/#register" className="hidden md:inline-flex bg-[#FDB714] text-[#003046] font-black py-3 px-8 rounded-full hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(253,183,20,0.4)] transition-all text-xs tracking-[0.15em] uppercase">
+          {/* Nút CTA Desktop */}
+          <Link href="/#register" className="hidden md:inline-flex active:scale-95 bg-[#FDB714] text-[#003046] font-black py-3 px-8 rounded-full hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(253,183,20,0.4)] transition-all text-xs tracking-[0.15em] uppercase">
             Học thử miễn phí.
           </Link>
 
-          {/* 💡 ĐÃ FIX: Hamburger Button (z-[101] và h-[3px]) */}
-          <button className="md:hidden w-10 h-10 flex flex-col justify-center items-end gap-1.5 p-1 z-[101] relative group" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            <span className={`block h-[3px] bg-[#003046] rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'w-7 rotate-45 translate-y-2.5' : 'w-7 group-hover:w-8'}`}></span>
-            <span className={`block h-[3px] bg-[#003046] rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0 translate-x-3' : 'w-5 group-hover:w-8'}`}></span>
-            <span className={`block h-[3px] bg-[#003046] rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'w-7 -rotate-45 -translate-y-2' : 'w-7 group-hover:w-8'}`}></span>
+          {/* Hamburger Button (Mobile) - 📱 MỚI 4: Thêm Haptic active:scale-90 */}
+          <button 
+            className="md:hidden w-10 h-10 flex flex-col justify-center items-end gap-1.5 p-1 z-[101] relative group active:scale-90 transition-transform" 
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Mở Menu"
+          >
+            <span className="block h-[3px] bg-[#003046] rounded-full w-7 transition-all duration-300"></span>
+            <span className="block h-[3px] bg-[#003046] rounded-full w-5 transition-all duration-300"></span>
+            <span className="block h-[3px] bg-[#003046] rounded-full w-7 transition-all duration-300"></span>
           </button>
         </div>
       </nav>
 
-      {/* 💡 ĐÃ FIX: Mobile Menu (z-[99] và layout cao cấp hơn) */}
-      <div className={`fixed inset-0 top-0 bg-[#f8fcfd] z-[99] p-8 pt-32 flex flex-col gap-2 transition-transform duration-700 ease-[cubic-bezier(0.25,0.4,0,1)] md:hidden shadow-2xl ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        
-        {/* Họa tiết trang trí */}
-        <div className="absolute -bottom-20 -right-10 text-[#60CBED] opacity-5 text-[20rem] rotate-12 select-none pointer-events-none">🐙</div>
+      {/* 📱 MỚI 1: BOTTOM SHEET THAY THẾ CHO MOBILE MENU XỔ XUỐNG CŨ */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-[9999] flex justify-end flex-col md:hidden">
+            
+            {/* Backdrop làm mờ phần nền */}
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-[#003046]/40 backdrop-blur-sm" 
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
 
-        {navLinks.map((link, index) => {
-          const isActive = checkActive(link.path);
-          return (
-            <Link 
-              key={link.path}
-              href={link.path} 
-              onClick={() => setIsMobileMenuOpen(false)} 
-              className={`block py-5 font-black text-3xl border-b border-[#60CBED]/10 transition-all duration-500
-                ${isActive ? 'text-[#60CBED] translate-x-2' : 'text-[#003046] hover:text-[#60CBED] hover:translate-x-2'}`}
-              style={{ transitionDelay: `${index * 50}ms` }}
+            {/* Khay trượt (Bottom Sheet) vuốt nam châm */}
+            <motion.div 
+              initial={{ y: "100%" }} 
+              animate={{ y: 0 }} 
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              drag="y" // Cho phép kéo vuốt tay
+              dragConstraints={{ top: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(e, { offset, velocity }) => {
+                if (offset.y > 100 || velocity.y > 500) setIsMobileMenuOpen(false); // Kéo xuống tắt
+              }}
+              className="bg-white rounded-t-[2.5rem] p-6 pb-12 relative z-10 flex flex-col shadow-[0_-20px_50px_rgba(0,48,70,0.2)]"
             >
-              <div className="flex items-center justify-between">
-                {link.name}
-                {isActive && <span className="text-[#60CBED] text-2xl animate-pulse">🐙</span>}
+              {/* Nút Handle (Cục xám nhỏ) chỉ báo có thể kéo */}
+              <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-8 cursor-grab active:cursor-grabbing shrink-0" />
+              
+              <h4 className="text-[#5a7a8a] text-[10px] font-bold uppercase tracking-widest mb-6 px-2">Điều hướng Octo.</h4>
+
+              {/* Danh sách Links */}
+              <div className="flex flex-col gap-2" onPointerDown={(e) => e.stopPropagation()}>
+                {navLinks.map((link) => {
+                  const isActive = checkActive(link.path);
+                  return (
+                    <Link 
+                      key={link.path}
+                      href={link.path} 
+                      onClick={() => setIsMobileMenuOpen(false)} 
+                      // 📱 MỚI 4: Gắn active:scale-95 cho chuẩn cảm giác bấm
+                      className={`flex items-center justify-between p-4 rounded-2xl font-black text-lg active:scale-95 transition-all
+                        ${isActive ? 'bg-[#60CBED]/10 text-[#003046] shadow-sm' : 'bg-transparent text-[#5a7a8a] hover:bg-gray-50'}`}
+                    >
+                      <span className="flex items-center gap-3">
+                        {link.name}
+                      </span>
+                      {isActive && <span className="text-[#60CBED] text-2xl leading-none animate-bounce-slow">🐙</span>}
+                    </Link>
+                  );
+                })}
               </div>
-            </Link>
-          );
-        })}
-        
-        <div className="mt-auto pb-10">
-          <p className="text-[#5a7a8a] text-[10px] font-bold uppercase tracking-widest mb-4 text-center">Bắt đầu hành trình mới</p>
-          <Link href="/#register" onClick={() => setIsMobileMenuOpen(false)} className="block bg-[#FDB714] text-[#003046] font-black py-5 rounded-2xl text-center shadow-[0_15px_30px_rgba(253,183,20,0.3)] hover:shadow-[0_20px_40px_rgba(253,183,20,0.5)] transition-all text-sm uppercase tracking-widest">
-            Đăng ký học thử ngay!
-          </Link>
-        </div>
-      </div>
+
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
