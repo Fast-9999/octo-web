@@ -203,8 +203,11 @@ export default function Home() {
             </div>
             <h1 className="text-[4rem] md:text-[5.5rem] lg:text-[7rem] font-black text-white leading-[1] tracking-tighter">
               Ngoại ngữ<br className="hidden sm:block" />
-              <TypingText /><br className="hidden sm:block" />
-              <span className="text-[#60CBED] font-bold text-[3rem] md:text-[4rem] lg:text-[5rem] tracking-tight">Môi trường thật chill.</span>
+              <TypingText />
+              {/* Đã sửa ở đây: Xóa class hidden sm:block để điện thoại bắt buộc xuống dòng */}
+              <br /> 
+              {/* Thêm mt-2 md:mt-0 để khoảng cách trên điện thoại thoáng hơn xíu mà máy tính vẫn giữ nguyên */}
+              <span className="text-[#60CBED] font-bold text-[3rem] md:text-[4rem] lg:text-[5rem] tracking-tight block md:inline mt-2 md:mt-0">Môi trường thật chill.</span>
             </h1>
             <p className="text-white/70 text-lg md:text-xl leading-relaxed max-w-2xl font-medium tracking-wide mt-4">
               Octo. mang đến hệ thống học tiếng Anh từ cơ bản đến nâng cao với 100% giáo viên bản ngữ, giúp học viên tự tin giao tiếp và phát triển tư duy sáng tạo.
