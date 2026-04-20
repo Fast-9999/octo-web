@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import PromoPopup from '@/components/PromoPopup';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Route, HeartHandshake, Target, Headset, Sparkles, BrainCircuit } from 'lucide-react';
 
 // 💡 COMPONENT: TẠO HIỆU ỨNG NỞ RA (SCALE)
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -520,13 +521,37 @@ export default function Home() {
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
-              { icon: '🗺️', title: 'Lộ trình rõ ràng.', desc: 'Chương trình được thiết kế theo lộ trình từng bước, đảm bảo học viên luôn biết mình đang ở đâu.' },
-              { icon: '💛', title: 'Giáo viên tận tâm.', desc: 'Đội ngũ giáo viên bản ngữ và Việt Nam được đào tạo bài bản, tận tâm với từng học viên.' },
-              { icon: '🎯', title: 'Chương trình độc quyền.', desc: 'Giáo trình được phát triển riêng bởi Octo., tích hợp kiến thức cuộc sống đa dạng.' },
-              { icon: '💻', title: 'Hỗ trợ trực tuyến.', desc: 'Học viên được hỗ trợ 24/7 qua các nền tảng online, giúp duy trì việc học mọi lúc.' },
-              { icon: '🌱', title: 'Môi trường tích cực.', desc: 'Không gian học tập "chill" — thoải mái, khuyến khích sự sáng tạo và tự tin.' },
-              { icon: '🧠', title: 'Kiến thức đa dạng.', desc: 'Không chỉ tiếng Anh — chúng tôi trang bị cho học viên kiến thức cuộc sống và tư duy.' }
-            ].map((benefit, idx) => (
+  { 
+    icon: <Route size={32} strokeWidth={1.5} className="text-[#60CBED] group-hover:text-[#FDB714] transition-colors duration-300" />, 
+    title: 'Lộ trình rõ ràng.', 
+    desc: 'Chương trình được thiết kế theo lộ trình từng bước, đảm bảo học viên luôn biết mình đang ở đâu.'
+  },
+  { 
+    icon: <HeartHandshake size={32} strokeWidth={1.5} className="text-[#60CBED] group-hover:text-[#FDB714] transition-colors duration-300" />, 
+    title: 'Giáo viên tận tâm.', 
+    desc: 'Đội ngũ giáo viên bản ngữ và Việt Nam được đào tạo bài bản, tận tâm với từng học viên.'
+  },
+  { 
+    icon: <Target size={32} strokeWidth={1.5} className="text-[#60CBED] group-hover:text-[#FDB714] transition-colors duration-300" />, 
+    title: 'Chương trình độc quyền.', 
+    desc: 'Giáo trình được phát triển riêng bởi Octo., tích hợp kiến thức cuộc sống đa dạng.'
+  },
+  { 
+    icon: <Headset size={32} strokeWidth={1.5} className="text-[#60CBED] group-hover:text-[#FDB714] transition-colors duration-300" />, 
+    title: 'Hỗ trợ trực tuyến.', 
+    desc: 'Học viên được hỗ trợ 24/7 qua các nền tảng online, giúp duy trì việc học mọi lúc.'
+  },
+  { 
+    icon: <Sparkles size={32} strokeWidth={1.5} className="text-[#60CBED] group-hover:text-[#FDB714] transition-colors duration-300" />, 
+    title: 'Môi trường tích cực.', 
+    desc: 'Không gian học tập "chill" — thoải mái, khuyến khích sự sáng tạo và tự tin.'
+  },
+  { 
+    icon: <BrainCircuit size={32} strokeWidth={1.5} className="text-[#60CBED] group-hover:text-[#FDB714] transition-colors duration-300" />, 
+    title: 'Kiến thức đa dạng.', 
+    desc: 'Không chỉ tiếng Anh — chúng tôi trang bị cho học viên kiến thức cuộc sống và tư duy.'
+  }
+].map((benefit, idx) => (
               <FadeIn key={idx} delay={idx * 100} className="group bg-white/5 backdrop-blur-xl backdrop-saturate-150 border border-white/10 rounded-[2.5rem] p-8 hover:bg-white/10 hover:border-[#60CBED]/40 hover:shadow-[0_20px_50px_rgba(96,203,237,0.15)] hover:-translate-y-2 transition-all duration-500">
                 <div className="w-16 h-16 shrink-0 rounded-[1.2rem] bg-white/5 flex items-center justify-center text-3xl mb-8 group-hover:scale-110 group-hover:bg-[#FDB714]/20 transition-all border border-white/10 shadow-inner">{benefit.icon}</div>
                 <div>
