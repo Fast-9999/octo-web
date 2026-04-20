@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import PromoPopup from '@/components/PromoPopup';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // 💡 COMPONENT: TẠO HIỆU ỨNG NỞ RA (SCALE)
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -424,31 +425,64 @@ export default function Home() {
                         </button>
                       </div>
 
-                      {/* 📱 MOBILE BOTTOM SHEET MODAL (Chỉ render cho Tab đang Active) */}
-                      {isLevelSheetOpen && isActive && (
-                        <div className="fixed inset-0 z-[1000] flex justify-end flex-col md:hidden">
-                          <div className="absolute inset-0 bg-[#003046]/40 backdrop-blur-sm transition-opacity" onClick={() => setIsLevelSheetOpen(false)}></div>
-                          <div className="bg-white rounded-t-[2.5rem] p-6 pb-10 relative z-10 transform transition-transform duration-300 translate-y-0">
-                            <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
-                            <h4 className="text-2xl font-black text-[#003046] mb-4 tracking-tight">Chọn cấp độ</h4>
-                            <div className="flex flex-col gap-2 max-h-[50vh] overflow-y-auto scrollbar-hide">
-                              {course.levels.map(level => (
-                                <button 
-                                  key={level.id} 
-                                  onClick={() => { handleLevelChange(course.id, level.id); setIsLevelSheetOpen(false); }}
-                                  className={`p-4 rounded-2xl font-bold text-left active:scale-95 transition-all border
-                                  ${activeLevels[course.id] === level.id 
-                                    ? 'bg-[#FDB714]/10 border-[#FDB714] text-[#003046]' 
-                                    : 'bg-white border-gray-100 text-[#5a7a8a]'}`}
-                                >
-                                  <span className="block text-sm mb-1">{level.name}</span>
-                                  <span className="block text-[11px] font-medium opacity-70 line-clamp-1">{level.levelTitle}</span>
-                                </button>
-                              ))}
-                            </div>
+                      {/* 📱 MOBILE BOTTOM SHEET MODAL (Đã Quấn Framer Motion) */}
+                      <AnimatePresence>
+                        {isLevelSheetOpen && isActive && (
+                          <div className="fixed inset-0 z-[1000] flex justify-end flex-col md:hidden">
+                            {/* Backdrop: Hiệu ứng mờ dần */}
+                            <motion.div 
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              className="absolute inset-0 bg-[#003046]/40 backdrop-blur-sm" 
+                              onClick={() => setIsLevelSheetOpen(false)}
+                            />
+                            
+                            {/* Khay vuốt (Bottom Sheet): Hiệu ứng trượt và nảy vật lý */}
+                            <motion.div 
+                              initial={{ y: "100%" }}
+                              animate={{ y: 0 }}
+                              exit={{ y: "100%" }}
+                              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                              drag="y" // Cho phép kéo theo trục dọc
+                              dragConstraints={{ top: 0 }} // Ngăn không cho kéo tuột lên trời
+                              dragElastic={0.2} // Độ cản (nặng nặng) khi cố kéo ngược lên
+                              onDragEnd={(e, { offset, velocity }) => {
+                                // Mấu chốt: Vuốt xuống quá 100px hoặc vuốt văng xuống nhanh thì đóng khay
+                                if (offset.y > 100 || velocity.y > 500) {
+                                  setIsLevelSheetOpen(false);
+                                }
+                              }}
+                              className="bg-white rounded-t-[2.5rem] p-6 pb-10 relative z-10 flex flex-col"
+                            >
+                              {/* Cục handle nhỏng trên cùng để người dùng biết là kéo được */}
+                              <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6 cursor-grab active:cursor-grabbing shrink-0" />
+                              
+                              <h4 className="text-2xl font-black text-[#003046] mb-4 tracking-tight shrink-0">Chọn cấp độ</h4>
+                              
+                              {/* Danh sách level (Lưu ý: onPointerDown để không bị xung đột cuộn list và kéo khay) */}
+                              <div 
+                                className="flex flex-col gap-2 max-h-[50vh] overflow-y-auto scrollbar-hide"
+                                onPointerDown={(e) => e.stopPropagation()} 
+                              >
+                                {course.levels.map(level => (
+                                  <button 
+                                    key={level.id} 
+                                    onClick={() => { handleLevelChange(course.id, level.id); setIsLevelSheetOpen(false); }}
+                                    className={`p-4 rounded-2xl font-bold text-left active:scale-95 transition-all border shrink-0
+                                    ${activeLevels[course.id] === level.id 
+                                      ? 'bg-[#FDB714]/10 border-[#FDB714] text-[#003046]' 
+                                      : 'bg-white border-gray-100 text-[#5a7a8a]'}`}
+                                  >
+                                    <span className="block text-sm mb-1">{level.name}</span>
+                                    <span className="block text-[11px] font-medium opacity-70 line-clamp-1">{level.levelTitle}</span>
+                                  </button>
+                                ))}
+                              </div>
+                            </motion.div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </AnimatePresence>
 
                       <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
                         <Link href={`/khoa-hoc/${course.id}`} className="flex-1 bg-[#003046] text-white font-black py-4.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#60CBED] hover:text-[#003046] transition-all active:scale-95 shadow-[0_10px_30px_rgba(0,48,70,0.2)] hover:-translate-y-1 text-sm uppercase tracking-widest">
