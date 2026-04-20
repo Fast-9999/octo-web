@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -17,7 +18,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
         if (domRef.current) observer.unobserve(domRef.current);
       }
     }, { threshold: 0.15 });
-
+    
     const currentRef = domRef.current;
     if (currentRef) observer.observe(currentRef);
     return () => { if (currentRef) observer.unobserve(currentRef); };
@@ -113,10 +114,10 @@ export default function Home() {
   });
   const [activeCourseTab, setActiveCourseTab] = useState('thieu-nhi');
 
-  // 📱 MỚI 1: State cho Khay vuốt từ đáy (Bottom Sheet) trên Mobile
+  // 📱 MỚI 1: State cho Khay vuốt từ đáy (Bottom Sheet)
   const [isLevelSheetOpen, setIsLevelSheetOpen] = useState(false);
 
-  // 📱 MỚI 5: Logic Smart Contextual FAB (Vuốt xuống ẩn, vuốt lên hiện)
+  // 📱 MỚI 5: Logic Smart Contextual FAB
   const [isFabVisible, setIsFabVisible] = useState(false);
   const lastScrollY = useRef(0);
 
@@ -124,9 +125,9 @@ export default function Home() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY < 300) {
-        setIsFabVisible(false); // Ẩn khi ở trên cùng màn hình
+        setIsFabVisible(false); 
       } else if (currentScrollY > lastScrollY.current) {
-        setIsFabVisible(false); // Đang vuốt xuống -> lặn mất để nhường không gian đọc
+        setIsFabVisible(false); // Vuốt xuống -> lặn mất
       } else {
         setIsFabVisible(true);  // Hơi vuốt lên -> hiện ra mời gọi
       }
@@ -195,20 +196,19 @@ export default function Home() {
 
         <div className="absolute top-[15%] right-[10%] text-[8rem] font-black text-white opacity-5 rotate-12 select-none pointer-events-none">∞</div>
         <div className="absolute bottom-[30%] left-[5%] text-[6rem] font-black text-white opacity-5 -rotate-12 select-none pointer-events-none">◎</div>
-        
+
         <div className="max-w-6xl w-full mx-auto px-5 flex flex-col items-center text-center relative z-10">
           <FadeIn className="flex flex-col items-center space-y-6 w-full">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-[10px] font-bold px-5 py-2 rounded-full uppercase tracking-[0.2em] shadow-lg backdrop-blur-md">
               <span className="w-2 h-2 bg-[#FDB714] rounded-full animate-pulse shadow-[0_0_10px_#FDB714]"></span>
               HỆ THỐNG ANH NGỮ CHUẨN QUỐC TẾ.
             </div>
+            
             <h1 className="text-[4rem] md:text-[5.5rem] lg:text-[7rem] font-black text-white leading-[1] tracking-tighter flex flex-col md:block items-center">
               <span>Ngoại ngữ</span>
               <br className="hidden md:block" />
               
-              {/* Bọc TypingText vào một hộp có chiều cao tối thiểu 130px (chuẩn 2 dòng) trên mobile. 
-                Đóng vai trò như "chống sốc", giữ layout không bị nhảy khi chữ dài ra.
-              */}
+              {/* Đóng vai trò như "chống sốc", giữ layout không bị nhảy khi chữ dài ra trên mobile */}
               <span className="min-h-[130px] md:min-h-0 flex items-center justify-center md:inline w-full">
                 <TypingText />
               </span>
@@ -218,11 +218,12 @@ export default function Home() {
                 Môi trường thật chill.
               </span>
             </h1>
+
             <p className="text-white/70 text-lg md:text-xl leading-relaxed max-w-2xl font-medium tracking-wide mt-4">
               Octo. mang đến hệ thống học tiếng Anh từ cơ bản đến nâng cao với 100% giáo viên bản ngữ, giúp học viên tự tin giao tiếp và phát triển tư duy sáng tạo.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-6">
-              {/* 📱 MỚI 4: Thêm active:scale-95 cho Visual Haptic Feedback */}
+              {/* 📱 MỚI 4: Haptic Feedback active:scale-95 */}
               <Link href="#register" className="bg-[#FDB714] text-[#003046] font-black py-4 px-10 rounded-full shadow-[0_10px_30px_rgba(253,183,20,0.4)] hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(253,183,20,0.5)] active:scale-95 transition-all tracking-widest uppercase text-sm">
                 Đăng ký học thử.
               </Link>
@@ -244,7 +245,7 @@ export default function Home() {
             <div className="w-full aspect-[16/9] md:aspect-[21/9]"></div>
             <div className="absolute inset-0 bg-[#003046]/40 mix-blend-multiply z-10 transition-opacity duration-700 group-hover:opacity-0"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-[#003046] via-[#003046]/20 to-transparent opacity-90 z-10"></div>
-
+            
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] md:w-auto bg-white/90 backdrop-blur-xl rounded-[2rem] p-4 md:pr-10 flex flex-col md:flex-row items-center justify-center gap-8 shadow-2xl border border-white/50 z-20">
               <div className="flex gap-8 items-center px-4">
                 {[
@@ -358,7 +359,8 @@ export default function Home() {
           </FadeIn>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-            <div className="lg:col-span-4 flex flex-row lg:flex-col gap-6 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 scrollbar-hide lg:sticky lg:top-32 h-max z-20">
+            {/* 💡 ĐÃ FIX SCROLLBAR: Thêm overflow-y-hidden lg:overflow-visible để chống giật thanh cuộn máy tính */}
+            <div className="lg:col-span-4 flex flex-row lg:flex-col gap-6 overflow-x-auto overflow-y-hidden lg:overflow-visible pb-4 lg:pb-0 scrollbar-hide lg:sticky lg:top-32 h-max z-20">
               {COURSE_DATA.map((course) => {
                 const isActive = activeCourseTab === course.id;
                 return (
@@ -393,7 +395,7 @@ export default function Home() {
                         <h3 className="text-3xl md:text-4xl font-black text-[#003046] mb-4 leading-[1.1] tracking-tight">{currentLevel.levelTitle}</h3>
                         <p className="text-[#5a7a8a] text-lg leading-relaxed font-medium">{currentLevel.levelDesc}</p>
                       </div>
-                      
+
                       <div className="relative w-full aspect-video md:aspect-[21/9] rounded-[2rem] overflow-hidden mb-10 bg-white border border-gray-100 shadow-inner group">
                         <Image src={currentLevel.img} alt={currentLevel.levelTitle} fill className="object-cover object-top group-hover:scale-105 transition-transform duration-[2s]" sizes="(max-width: 1024px) 100vw, 50vw" />
                         <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black text-[#003046] uppercase tracking-widest shadow-sm">
@@ -406,7 +408,7 @@ export default function Home() {
                         <div className="h-[1px] bg-gray-200 grow"></div>
                       </div>
 
-                      {/* 📱 HIỂN THỊ DESKTOP: Các nút Level inline truyền thống */}
+                      {/* 📱 HIỂN THỊ DESKTOP */}
                       <div className="hidden md:flex flex-wrap gap-3 mb-10">
                         {course.levels.map((level) => (
                           <button
@@ -422,9 +424,9 @@ export default function Home() {
                         ))}
                       </div>
 
-                      {/* 📱 HIỂN THỊ MOBILE: Nút mở Bottom Sheet để chọn Level gọn gàng */}
+                      {/* 📱 HIỂN THỊ MOBILE: Nút mở Bottom Sheet */}
                       <div className="md:hidden mb-8">
-                        <button 
+                        <button
                           onClick={() => setIsLevelSheetOpen(true)}
                           className="w-full bg-white border-2 border-gray-100 text-[#003046] font-black py-4 rounded-2xl flex justify-between items-center px-5 shadow-sm active:scale-95 transition-all"
                         >
@@ -433,53 +435,47 @@ export default function Home() {
                         </button>
                       </div>
 
-                      {/* 📱 MOBILE BOTTOM SHEET MODAL (Đã Quấn Framer Motion) */}
+                      {/* 📱 MỚI 1: MOBILE BOTTOM SHEET MODAL (Framer Motion) */}
                       <AnimatePresence>
                         {isLevelSheetOpen && isActive && (
                           <div className="fixed inset-0 z-[1000] flex justify-end flex-col md:hidden">
-                            {/* Backdrop: Hiệu ứng mờ dần */}
-                            <motion.div 
+                            <motion.div
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
-                              className="absolute inset-0 bg-[#003046]/40 backdrop-blur-sm" 
+                              className="absolute inset-0 bg-[#003046]/40 backdrop-blur-sm"
                               onClick={() => setIsLevelSheetOpen(false)}
                             />
-                            
-                            {/* Khay vuốt (Bottom Sheet): Hiệu ứng trượt và nảy vật lý */}
-                            <motion.div 
+
+                            <motion.div
                               initial={{ y: "100%" }}
                               animate={{ y: 0 }}
                               exit={{ y: "100%" }}
                               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                              drag="y" // Cho phép kéo theo trục dọc
-                              dragConstraints={{ top: 0 }} // Ngăn không cho kéo tuột lên trời
-                              dragElastic={0.2} // Độ cản (nặng nặng) khi cố kéo ngược lên
+                              drag="y"
+                              dragConstraints={{ top: 0 }}
+                              dragElastic={0.2}
                               onDragEnd={(e, { offset, velocity }) => {
-                                // Mấu chốt: Vuốt xuống quá 100px hoặc vuốt văng xuống nhanh thì đóng khay
                                 if (offset.y > 100 || velocity.y > 500) {
                                   setIsLevelSheetOpen(false);
                                 }
                               }}
-                              className="bg-white rounded-t-[2.5rem] p-6 pb-10 relative z-10 flex flex-col"
+                              className="bg-white rounded-t-[2.5rem] p-6 pb-10 relative z-10 flex flex-col max-h-[85vh]"
                             >
-                              {/* Cục handle nhỏng trên cùng để người dùng biết là kéo được */}
                               <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6 cursor-grab active:cursor-grabbing shrink-0" />
-                              
                               <h4 className="text-2xl font-black text-[#003046] mb-4 tracking-tight shrink-0">Chọn cấp độ</h4>
-                              
-                              {/* Danh sách level (Lưu ý: onPointerDown để không bị xung đột cuộn list và kéo khay) */}
-                              <div 
-                                className="flex flex-col gap-2 max-h-[50vh] overflow-y-auto scrollbar-hide"
-                                onPointerDown={(e) => e.stopPropagation()} 
+
+                              <div
+                                className="flex flex-col gap-2 overflow-y-auto scrollbar-hide pb-6"
+                                onPointerDown={(e) => e.stopPropagation()}
                               >
                                 {course.levels.map(level => (
-                                  <button 
-                                    key={level.id} 
+                                  <button
+                                    key={level.id}
                                     onClick={() => { handleLevelChange(course.id, level.id); setIsLevelSheetOpen(false); }}
                                     className={`p-4 rounded-2xl font-bold text-left active:scale-95 transition-all border shrink-0
-                                    ${activeLevels[course.id] === level.id 
-                                      ? 'bg-[#FDB714]/10 border-[#FDB714] text-[#003046]' 
+                                    ${activeLevels[course.id] === level.id
+                                      ? 'bg-[#FDB714]/10 border-[#FDB714] text-[#003046]'
                                       : 'bg-white border-gray-100 text-[#5a7a8a]'}`}
                                   >
                                     <span className="block text-sm mb-1">{level.name}</span>
@@ -580,8 +576,8 @@ export default function Home() {
             </h2>
           </FadeIn>
           
-          {/* 📱 MỚI 2: Horizontal Snap Scrolling với hiệu ứng "Nam châm" */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 pb-8 md:pb-0 -mx-5 px-5 md:mx-0 md:px-0">
+          {/* 💡 ĐÃ FIX SCROLLBAR: Thêm overflow-y-hidden md:overflow-visible để chống giật thanh cuộn máy tính */}
+          <div className="flex overflow-x-auto overflow-y-hidden md:overflow-visible snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 pb-8 md:pb-0 -mx-5 px-5 md:mx-0 md:px-0">
             {[
               { init: 'LM', quote: 'Con tôi trước rất ngại nói tiếng Anh, nhưng chỉ sau 3 tháng học tại Octo. con đã tự tin giao tiếp với người nước ngoài. Giáo viên rất tận tâm và phương pháp dạy rất sáng tạo.', author: 'Chị Lan Minh.', role: 'Phụ huynh học viên – Thiếu nhi.' },
               { init: 'TN', quote: 'Không khí lớp học rất vui và thoải mái. Mình học được rất nhiều từ vựng và cách nói chuyện thực tế, không chỉ học ngữ pháp khô khan như trường thôi.', author: 'Bạn Tuấn Nguyên.', role: 'Học viên – Thiếu niên, 14 tuổi.' },
@@ -635,7 +631,6 @@ export default function Home() {
             <h3 className="text-3xl lg:text-4xl font-black text-[#003046] mb-2 tracking-tight">Đăng ký ngay.</h3>
             <p className="text-[#5a7a8a] text-[10px] mb-10 font-bold uppercase tracking-[0.2em]">Ưu đãi có hạn — đừng bỏ lỡ!</p>
 
-            {/* 📱 MỚI 3: Form "Thumb-Zone" tăng ring và border khi chạm */}
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-[10px] font-black text-[#003046] mb-2 uppercase tracking-[0.1em]">Họ và tên phụ huynh <span className="text-red-500">*</span></label>
@@ -643,7 +638,6 @@ export default function Home() {
               </div>
               <div>
                 <label className="block text-[10px] font-black text-[#003046] mb-2 uppercase tracking-[0.1em]">Số điện thoại <span className="text-red-500">*</span></label>
-                {/* Đã chuẩn type="tel" để bung bàn phím số */}
                 <input type="tel" name="phone" className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-[#60CBED] focus:ring-4 focus:ring-[#60CBED]/20 transition-all text-sm text-[#003046] font-bold" placeholder="0909 xxx xxx" required />
               </div>
               <div>
@@ -660,7 +654,6 @@ export default function Home() {
                 </select>
               </div>
               
-              {/* 📱 MỚI 4: Visual Haptic Feedback cho CTA chính (active:scale-95) */}
               <button type="submit" className="w-full bg-[#FDB714] text-[#003046] font-black py-5 rounded-xl mt-6 shadow-[0_10px_25px_rgba(253,183,20,0.3)] hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(253,183,20,0.5)] active:scale-95 transition-all duration-150 uppercase tracking-[0.15em] text-xs flex items-center justify-center gap-2">
                 🎁 Đăng ký học thử ngay!
               </button>
@@ -670,8 +663,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ FLOATING CTA BAR (MOBILE) - SMART SCROLL ═══ */}
-      {/* 📱 MỚI 5: Thanh hành động dính thông minh bắt State isFabVisible */}
+      {/* 📱 MỚI 5: Thanh hành động dính thông minh (Smart Contextual FAB) */}
       <div className={`fixed bottom-0 left-0 right-0 z-[900] bg-white/90 backdrop-blur-xl border-t border-gray-100 p-4 px-5 flex items-center justify-between gap-4 transition-transform duration-300 md:hidden shadow-[0_-10px_40px_rgba(0,48,70,0.1)] 
       ${isFabVisible ? 'translate-y-0' : 'translate-y-full'}`}>
         <div className="text-xs text-[#003046] font-bold tracking-tight">
@@ -686,6 +678,7 @@ export default function Home() {
       <div className={`fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#003046] text-white px-8 py-4 rounded-full text-sm font-bold shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-[#60CBED]/40 z-[9999] transition-all duration-500 whitespace-nowrap flex items-center gap-3 ${toastMessage ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
         {toastMessage}
       </div>
+      
       <PromoPopup />
     </main>
   );
