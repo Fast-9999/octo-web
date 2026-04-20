@@ -62,12 +62,11 @@ export default function ContactPage() {
     const formData = new FormData(form);
     const name = formData.get('name') as string;
 
-    // ✅ ĐÃ ĐỔI TÊN BIẾN CHO KHỚP 100% VỚI BACKEND
     const data = {
-      fullName: name,                               // Đổi 'name' thành 'fullName'
+      fullName: name,                               
       phone: formData.get('phone') as string,
       email: (formData.get('email') as string) || '',
-      program: 'Khách cần tư vấn chung',            // Đổi 'course' thành 'program'
+      program: 'Khách cần tư vấn chung',            
       message: formData.get('message') as string,
       status: 'MỚI',
       type: 'LIÊN HỆ'
@@ -117,17 +116,29 @@ export default function ContactPage() {
         {/* ═══ THÔNG TIN LIÊN LẠC & GOOGLE MAPS ═══ */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-28">
 
-          {/* Cột trái: Bento Grid Thông tin - 📱 MỚI: Tích hợp Snap Scrolling ngang */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 gap-6 pb-6 -mx-5 px-5 sm:mx-0 sm:px-0 sm:pb-0">
+          {/* Cột trái: Bento Grid Thông tin */}
+          {/* 💡 ĐÃ FIX LỖI SCROLLBAR: Thêm overflow-y-hidden và sm:overflow-visible để triệt tiêu cái thanh cuộn hiện ra 1 giây trên máy tính */}
+          <div className="flex overflow-x-auto overflow-y-hidden sm:overflow-visible snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 gap-6 pb-6 -mx-5 px-5 sm:mx-0 sm:px-0 sm:pb-0">
             
             <FadeIn delay={100} className="w-[85vw] sm:w-auto shrink-0 snap-center bg-white rounded-[2.5rem] p-8 md:p-10 border border-[#60CBED]/10 hover:border-[#60CBED]/40 hover:shadow-[0_20px_50px_rgba(96,203,237,0.15)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-center group shadow-sm">
-              <div className="w-16 h-16 bg-[#f0faff] text-[#60CBED] group-hover:bg-[#003046] group-hover:text-[#FDB714] rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-inner transition-colors duration-500">📍</div>
+              <div className="w-16 h-16 bg-[#f0faff] text-[#60CBED] group-hover:bg-[#003046] group-hover:text-[#FDB714] rounded-2xl flex items-center justify-center mb-8 shadow-inner transition-colors duration-500">
+                {/* 💡 ĐÃ THAY EMOJI BẰNG SVG: Icon Địa chỉ (Map Pin) */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+              </div>
               <h3 className="text-[#003046] font-black text-2xl mb-3 tracking-tight">Địa chỉ.</h3>
               <p className="text-[#5a7a8a] text-sm leading-relaxed font-medium">45 đường D2A, khu Manhattan – Vinhomes Grand Park, TP. Thủ Đức, TP.HCM.</p>
             </FadeIn>
 
             <FadeIn delay={200} className="w-[85vw] sm:w-auto shrink-0 snap-center bg-white rounded-[2.5rem] p-8 md:p-10 border border-[#60CBED]/10 hover:border-[#60CBED]/40 hover:shadow-[0_20px_50px_rgba(96,203,237,0.15)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-center group shadow-sm">
-              <div className="w-16 h-16 bg-[#f0faff] text-[#60CBED] group-hover:bg-[#60CBED] group-hover:text-white rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-inner transition-colors duration-500">📞</div>
+              <div className="w-16 h-16 bg-[#f0faff] text-[#60CBED] group-hover:bg-[#60CBED] group-hover:text-white rounded-2xl flex items-center justify-center mb-8 shadow-inner transition-colors duration-500">
+                {/* 💡 ĐÃ THAY EMOJI BẰNG SVG: Icon Hotline (Phone) */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.48-4.18-7.076-7.076l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                </svg>
+              </div>
               <h3 className="text-[#003046] font-black text-2xl mb-3 tracking-tight">Hotline.</h3>
               {/* 📱 MỚI: Haptic Feedback active:scale-95 */}
               <a href="tel:0909964296" className="text-[#003046] text-xl font-black hover:text-[#60CBED] active:scale-95 inline-block transition-transform duration-150">0909 964 296.</a>
@@ -135,7 +146,12 @@ export default function ContactPage() {
             </FadeIn>
 
             <FadeIn delay={300} className="w-[85vw] sm:w-auto shrink-0 snap-center bg-white rounded-[2.5rem] p-8 md:p-10 border border-[#60CBED]/10 hover:border-[#60CBED]/40 hover:shadow-[0_20px_50px_rgba(96,203,237,0.15)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-center group shadow-sm">
-              <div className="w-16 h-16 bg-[#f0faff] text-[#60CBED] group-hover:bg-[#FDB714] group-hover:text-[#003046] rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-inner transition-colors duration-500">✉️</div>
+              <div className="w-16 h-16 bg-[#f0faff] text-[#60CBED] group-hover:bg-[#FDB714] group-hover:text-[#003046] rounded-2xl flex items-center justify-center mb-8 shadow-inner transition-colors duration-500">
+                {/* 💡 ĐÃ THAY EMOJI BẰNG SVG: Icon Email (Envelope) */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+              </div>
               <h3 className="text-[#003046] font-black text-2xl mb-3 tracking-tight">Email.</h3>
               {/* 📱 MỚI: Haptic Feedback active:scale-95 */}
               <a href="mailto:services@octo.vn" className="text-[#003046] text-lg font-black hover:text-[#60CBED] active:scale-95 inline-block transition-transform duration-150">services@octo.vn.</a>
@@ -143,7 +159,12 @@ export default function ContactPage() {
             </FadeIn>
 
             <FadeIn delay={400} className="w-[85vw] sm:w-auto shrink-0 snap-center bg-gradient-to-br from-[#f0faff] to-white rounded-[2.5rem] p-8 md:p-10 border border-[#60CBED]/30 hover:border-[#60CBED] hover:shadow-[0_20px_50px_rgba(96,203,237,0.15)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-center group">
-              <div className="w-16 h-16 bg-white text-[#60CBED] rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-sm border border-[#60CBED]/20 group-hover:rotate-12 transition-transform duration-500">🕐</div>
+              <div className="w-16 h-16 bg-white text-[#60CBED] rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-[#60CBED]/20 group-hover:rotate-12 transition-transform duration-500">
+                {/* 💡 ĐÃ THAY EMOJI BẰNG SVG: Icon Giờ làm việc (Clock) */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </div>
               <h3 className="text-[#003046] font-black text-2xl mb-3 tracking-tight">Giờ làm việc.</h3>
               <p className="text-[#003046] text-lg font-black">8:00 – 22:00.</p>
               <p className="text-[#5a7a8a] text-[10px] uppercase tracking-[0.1em] mt-3 font-bold">Tất cả các ngày trong tuần.</p>
