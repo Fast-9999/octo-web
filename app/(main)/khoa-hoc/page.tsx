@@ -2,6 +2,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BookOpen, Route } from 'lucide-react';
 
 // 💡 HIỆU ỨNG NỞ RA (SCALE) CHUẨN GODLY
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -134,8 +135,8 @@ export default function CourseListing() {
         {/* ═══ HEADER TRANG ═══ */}
         <FadeIn className="mb-16 space-y-4 text-center">
           <div className="inline-flex items-center gap-2 bg-white border border-[#60CBED]/30 text-[#003046] text-[10px] font-bold px-5 py-2 rounded-full uppercase tracking-[0.2em] shadow-sm">
-            📚 Lộ trình học tập
-          </div>
+  <Route className="w-4 h-4 text-[#60CBED]" strokeWidth={2.5} /> Lộ trình học tập
+</div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#003046] leading-[1.05] tracking-tight">
             Danh sách <br/><span className="text-[#60CBED]">Khóa học.</span>
           </h1>
