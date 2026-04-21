@@ -35,7 +35,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 // Dữ liệu Khóa học và Cấp độ
 const COURSE_DATA = [
   {
-    id: 'thieu-nhi', category: 'Thiếu nhi', age: '3-6 tuổi', level: 'Cơ bản', title: 'Tiếng Anh Thiếu Nhi.',
+    id: 'thieu-nhi', category: 'Thiếu nhi', age: 'Thiếu nhi (3+)', level: 'Cơ bản', title: 'Tiếng Anh Thiếu Nhi.',
     desc: 'Khơi dậy niềm đam mê tiếng Anh từ nhỏ thông qua phương pháp học qua chơi (Play-based learning). Lộ trình 7 cấp độ từ cơ bản đến nâng cao.',
     levels: [
       { id: 1, name: 'Level 1', img: 'https://octo.vn/img_data/images/hinhanh/1.jpg' },
@@ -48,7 +48,7 @@ const COURSE_DATA = [
     ]
   },
   {
-    id: 'thieu-nien', category: 'Thiếu niên', age: '6-11 tuổi', level: 'Trung cấp', title: 'Tiếng Anh Thiếu Niên.',
+    id: 'thieu-nien', category: 'Thiếu niên', age: 'Thiếu niên (12+)', level: 'Trung cấp', title: 'Tiếng Anh Thiếu Niên.',
     desc: 'Phát triển toàn diện 4 kỹ năng và tư duy phản biện. Trang bị kiến thức vững chắc để chinh phục các kỳ thi quốc tế. Lộ trình 7 cấp độ chuyên sâu.',
     levels: [
       { id: 1, name: 'Level 1', img: 'https://octo.vn/img_data/images/khoa-hoc/1%20(1).jpg' },
@@ -61,7 +61,7 @@ const COURSE_DATA = [
     ]
   },
   {
-    id: 'cap-toc', category: 'Cấp tốc', age: '11-16 tuổi', level: 'Nâng cao', title: 'Tiếng Anh Cấp Tốc.',
+    id: 'cap-toc', category: 'Cấp tốc', age: 'Cấp tốc', level: 'Nâng cao', title: 'Tiếng Anh Cấp Tốc.',
     desc: 'Lộ trình tinh gọn giúp học viên bứt phá điểm số và giao tiếp tự tin trong thời gian ngắn nhất. Chương trình 6 cấp độ hiệu quả cao.',
     levels: [
       { id: 1, name: 'Level 1', img: 'https://octo.vn/img_data/images/khoa-hoc/1.jpg' },
@@ -149,9 +149,9 @@ export default function CourseListing() {
           
           {/* Lọc theo tuổi - 📱 MỚI: Tối ưu Snap Scrolling ngang trên mobile */}
           <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 w-full md:w-auto">
-            <span className="text-[10px] font-black text-[#5a7a8a] uppercase tracking-[0.15em] shrink-0">Độ tuổi:</span>
+            <span className="text-[10px] font-black text-[#5a7a8a] uppercase tracking-[0.15em] shrink-0">CHƯƠNG TRÌNH:</span>
             <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-2 pb-2 md:pb-0 w-full md:flex-wrap">
-              {['Tất cả', '3-6 tuổi', '6-11 tuổi', '11-16 tuổi'].map(age => (
+              {['Tất cả', 'Thiếu nhi (3+)', 'Thiếu niên (12+)', 'Cấp tốc'].map(age => (
                 <button
                   key={age} onClick={() => setFilterAge(age)}
                   className={`snap-center shrink-0 px-5 py-2.5 rounded-[1rem] text-xs font-bold transition-all duration-300 active:scale-95 ${filterAge === age ?

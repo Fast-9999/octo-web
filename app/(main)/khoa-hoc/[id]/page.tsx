@@ -36,8 +36,8 @@ const COURSE_DETAILS: Record<string, any> = {
   'thieu-nhi': {
     title: 'Tiếng Anh Thiếu Nhi.',
     subtitle: 'Vui học tiếng Anh, khơi dậy tiềm năng.',
-    desc: 'Chương trình được thiết kế đặc biệt cho trẻ từ 3-6 tuổi, kết hợp phương pháp học qua chơi (Play-based learning). Giúp trẻ phát triển phản xạ ngôn ngữ tự nhiên, phát âm chuẩn bản xứ và nuôi dưỡng sự tự tin ngay từ những năm tháng đầu đời.',
-    audience: ['Trẻ em từ 3 đến 6 tuổi.', 'Bé bắt đầu làm quen với tiếng Anh.', 'Phụ huynh muốn con học phát âm chuẩn từ nhỏ.'],
+    desc: 'Chương trình được thiết kế đặc biệt cho trẻ từ 3 tuổi trở lên, kết hợp phương pháp học qua chơi (Play-based learning). Giúp trẻ phát triển phản xạ ngôn ngữ tự nhiên, phát âm chuẩn bản xứ và nuôi dưỡng sự tự tin ngay từ những năm tháng đầu đời.',
+    audience: ['Trẻ em từ 3 tuổi trở lên.', 'Bé bắt đầu làm quen với tiếng Anh.', 'Phụ huynh muốn con học phát âm chuẩn từ nhỏ.'],
     schedule: '2 buổi/tuần (Thứ 2-4, 3-5 hoặc Cuối tuần). Mỗi buổi 1.5 giờ.',
     tuition: 'Từ 14.000.000đ - 27.500.000đ / Khóa',
     levels: [
@@ -54,7 +54,7 @@ const COURSE_DETAILS: Record<string, any> = {
     title: 'Tiếng Anh Thiếu Niên.',
     subtitle: 'Nền tảng vững chắc, vươn tầm quốc tế.',
     desc: 'Lộ trình phát triển toàn diện 4 kỹ năng Nghe - Nói - Đọc - Viết. Khóa học tập trung xây dựng tư duy phản biện (Critical Thinking) và trang bị kiến thức học thuật để học viên sẵn sàng chinh phục các kỳ thi quốc tế như Cambridge, IELTS.',
-    audience: ['Học sinh cấp 1, cấp 2 (từ 6-11 tuổi).', 'Học viên cần xây gốc ngữ pháp và từ vựng.', 'Học viên có định hướng thi chứng chỉ quốc tế.'],
+    audience: ['Học sinh cấp 2, cấp 3 (từ 12 tuổi trở lên).', 'Học viên cần xây gốc ngữ pháp và từ vựng.', 'Học viên có định hướng thi chứng chỉ quốc tế.'],
     schedule: '2 buổi/tuần (Thứ 3-5, 4-6 hoặc Cuối tuần). Mỗi buổi 2 giờ.',
     tuition: 'Từ 14.000.000đ - 27.500.000đ / Khóa',
     levels: [
@@ -71,7 +71,7 @@ const COURSE_DETAILS: Record<string, any> = {
     title: 'Tiếng Anh Cấp Tốc.',
     subtitle: 'Đột phá điểm số, tự tin giao tiếp.',
     desc: 'Khóa học được thiết kế tinh gọn, cá nhân hóa lộ trình để tối ưu thời gian học. Phù hợp cho học viên cần luyện thi chứng chỉ gấp hoặc người đi làm muốn cải thiện khả năng tiếng Anh trong thời gian ngắn nhất.',
-    audience: ['Học sinh, sinh viên từ 11-16 tuổi.', 'Người cần thi chứng chỉ IELTS, TOEIC gấp.', 'Người đi làm bận rộn cần học cấp tốc.'],
+    audience: ['Mọi lứa tuổi (Học sinh, sinh viên, người đi làm...)', 'Người cần thi chứng chỉ IELTS, TOEIC gấp.', 'Người đi làm bận rộn cần học cấp tốc.'],
     schedule: '3 buổi/tuần hoặc linh hoạt theo lịch học viên. Mỗi buổi 2 giờ.',
     tuition: 'Từ 20.000.000đ - 27.500.000đ / Khóa',
     levels: [
