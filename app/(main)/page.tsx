@@ -72,7 +72,7 @@ const TypingText = () => {
 // ═══ DỮ LIỆU KHÓA HỌC ═══
 const COURSE_DATA = [
   {
-    id: 'thieu-nhi', category: 'Thiếu nhi.', age: '3-6 tuổi.',
+    id: 'thieu-nhi', category: 'Thiếu nhi.', age: '3+',
     levels: [
       { id: 1, name: 'Level 1', img: 'https://octo.vn/img_data/images/hinhanh/1.jpg', levelTitle: 'Tiếng Anh Thiếu Nhi (Cấp độ 1).', levelDesc: 'Khóa Tiếng Anh Thiếu Nhi - Cấp độ 1 (Pre-Foundation) phù hợp với học viên muốn lấy lại nền tảng cơ bản.' },
       { id: 2, name: 'Level 2', img: 'https://octo.vn/img_data/images/hinhanh/2.jpg', levelTitle: 'Tiếng Anh Thiếu Nhi (Cấp độ 2).', levelDesc: 'Khóa Tiếng Anh Thiếu Nhi - Cấp độ 2 (Foundation) phù hợp với học viên muốn đạt trình độ A1, tương đương trình độ nền tảng của IELTS, TOEIC.' },
@@ -84,7 +84,7 @@ const COURSE_DATA = [
     ]
   },
   {
-    id: 'thieu-nien', category: 'Thiếu niên.', age: '6-11 tuổi.',
+    id: 'thieu-nien', category: 'Thiếu niên.', age: '12+',
     levels: [
       { id: 1, name: 'Level 1', img: 'https://octo.vn/img_data/images/khoa-hoc/1%20(1).jpg', levelTitle: 'Tiếng Anh Thiếu Niên/ Người Lớn (Cấp độ 1).', levelDesc: 'Tiếng Anh Thiếu Niên/ Người Lớn - Cấp độ 1 (Foundation) phù hợp với học viên muốn lấy lại nền tảng cơ bản.' },
       { id: 2, name: 'Level 2', img: 'https://octo.vn/img_data/images/khoa-hoc/2%20(1).jpg', levelTitle: 'Tiếng Anh Thiếu Niên/ Người Lớn (Cấp độ 2).', levelDesc: 'Khóa Tiếng Anh Thiếu Niên/ Người Lớn - Cấp độ 2 (Foundation) phù hợp với học viên muốn đạt trình độ A1, tương đương trình độ nền tảng của IELTS, TOEIC.' },
@@ -96,7 +96,7 @@ const COURSE_DATA = [
     ]
   },
   {
-    id: 'cap-toc', category: 'Cấp tốc.', age: '11-16 tuổi.',
+    id: 'cap-toc', category: 'Cấp tốc.', age: 'MỌI LỨA TUỔI.',
     levels: [
       { id: 1, name: 'Level 1', img: 'https://octo.vn/img_data/images/khoa-hoc/1.jpg', levelTitle: 'Khóa Cấp Tốc (Cấp độ 1).', levelDesc: 'Khóa Tiếng Anh Cấp Tốc - Cấp độ 1 (Foundation) phù hợp với học viên muốn đạt trình độ A1, tương đương trình độ nền tảng của IELTS, TOEIC trong thời gian ngắn.' },
       { id: 2, name: 'Level 2', img: 'https://octo.vn/img_data/images/khoa-hoc/2.jpg', levelTitle: 'Khóa Cấp Tốc (Cấp độ 2).', levelDesc: 'Khóa Cấp Tốc - Cấp độ 2 (Beginner) phù hợp với học viên muốn đạt trình độ A2, tương đương 2.0-3.0 IELTS/350 TOEIC trong thời gian ngắn.' },
