@@ -37,7 +37,7 @@ export default function Navbar() {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity active:scale-95 md:hover:scale-105 duration-300">
-            <img src="https://octo.vn/img_data/images/logo/logo.png" alt="Octo." className="h-10 w-auto drop-shadow-md" />
+            <img src="https://octo.vn/img_data/images/logo/Logo_Main.png" alt="Octo." className="h-10 w-auto drop-shadow-md" />
           </Link>
 
           {/* Desktop Menu */}
