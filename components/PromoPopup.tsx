@@ -65,6 +65,7 @@ export default function PromoPopup() {
                alt="Promo" 
                fill 
                className="object-cover" 
+               sizes="(max-width: 768px) 100vw, 50vw"
              />
            ) : (
              <div className="w-full h-full bg-white/10"></div>
