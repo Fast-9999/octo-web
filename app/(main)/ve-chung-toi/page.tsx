@@ -2,11 +2,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+// 💡 MỚI: Import icon chuẩn Premium từ lucide-react thay cho Emoji
+import { BookOpen, HeartHandshake, GraduationCap, Hand, User } from 'lucide-react';
 
 // 💡 HIỆU ỨNG NỞ RA (SCALE) CHUẨN GODLY
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
@@ -19,6 +22,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
     if (currentRef) observer.observe(currentRef);
     return () => { if (currentRef) observer.unobserve(currentRef); };
   }, []);
+
   return (
     <div
       ref={domRef}
@@ -40,7 +44,7 @@ const TEACHERS = [
 
 export default function AboutUs() {
   const [activeTab, setActiveTab] = useState(1);
-  
+
   // 📱 MỚI: State cho Bottom Sheet và Smart FAB
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isFabVisible, setIsFabVisible] = useState(false);
@@ -77,7 +81,7 @@ export default function AboutUs() {
     {
       id: 3,
       title: "Tiếp cận tự nhiên.",
-      content: `Một hệ thống giáo dục ngôn ngữ toàn diện cần được xây dựng nội dung học vững chắc từ nền tảng đến nâng cao, giúp người học thẩm thấu các lớp của ngôn ngữ, tiếp cận theo phương pháp tự nhiên, và tiếp nhận giá trị theo tinh thần tích cực.\n\nNhờ sự hỗ trợ của Google và các công cụ AI, việc ghi nhớ và học thuộc lòng giờ đây đã không cần thiết. Cách học tốt nhất ở thời điểm hiện tại là gia tăng thời gian tiếp xúc và sử dụng với ngôn ngữ một cách tối đa trên đa dạng nền tảng khác nhau.`
+      content: `Một hệ thống giáo dục ngôn ngữ toàn diện cần được xây dựng nội dung học vững chắc từ nền tảng đến nâng cao, giúp người học thẩm thấu các lớp của ngôn ngữ, tiếp cận theo phương pháp tự nhiên, và tiếp nhận giá trị theo tinh thần tích cực.\n\nNhờ sự hỗ trợ của Google và các công cụ AI, việc ghi nhớ và học thuộc lòng giờ đây đã không cần thiết.\nCách học tốt nhất ở thời điểm hiện tại là gia tăng thời gian tiếp xúc và sử dụng với ngôn ngữ một cách tối đa trên đa dạng nền tảng khác nhau.`
     }
   ];
 
@@ -85,13 +89,20 @@ export default function AboutUs() {
 
   return (
     <main className="font-sans text-[#1a2e38] bg-[#f8fcfd] overflow-x-hidden relative min-h-screen">
-      
+      {/* 💡 CSS CHO HIỆU ỨNG VUỐT NGANG */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes swipe-hint { 0%, 100% { transform: translateX(0); opacity: 0.5; } 50% { transform: translateX(6px); opacity: 1; } }
+        .animate-swipe-hint { animation: swipe-hint 1.5s ease-in-out infinite; }
+      `}} />
+
       {/* ═══ HEADER SECTION ═══ */}
       <section className="relative pt-32 pb-24 bg-gradient-to-b from-[#f0faff] to-[#f8fcfd] overflow-hidden text-center px-5">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#60CBED]/20 blur-[120px] rounded-full pointer-events-none animate-pulse"></div>
         <FadeIn className="relative z-10 max-w-3xl mx-auto space-y-6">
+          {/* FIX SỐ 1: THAY ICON */}
           <div className="inline-flex items-center gap-2 bg-white border border-[#60CBED]/30 text-[#003046] text-[10px] font-bold px-5 py-2 rounded-full uppercase shadow-sm tracking-[0.2em]">
-            🐙 Câu chuyện của chúng tôi.
+            <BookOpen size={14} className="text-[#60CBED]" /> Câu chuyện của chúng tôi.
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-[4rem] font-black text-[#003046] leading-[1.05] tracking-tight">
             Vượt xa hơn cả<br/>
@@ -131,7 +142,7 @@ export default function AboutUs() {
 
         {/* 📱 HIỂN THỊ MOBILE: Nút gọi Bottom Sheet siêu gọn */}
         <FadeIn delay={100} className="md:hidden mb-8 w-full max-w-md mx-auto">
-          <button 
+          <button
             onClick={() => setIsSheetOpen(true)}
             className="w-full bg-white border-2 border-[#60CBED]/30 text-[#003046] font-black py-4 rounded-2xl flex justify-between items-center px-6 shadow-sm active:scale-95 transition-all"
           >
@@ -163,6 +174,15 @@ export default function AboutUs() {
             <div className="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em] bg-white/5 px-5 py-2.5 rounded-full backdrop-blur-md">Core Values // 04</div>
           </FadeIn>
 
+          {/* 📱 FIX SỐ 2: Tín hiệu vuốt ngang cực tinh tế cho Mobile (Giá trị cốt lõi) */}
+          <div className="md:hidden flex items-center justify-center gap-3 mb-8 text-[#60CBED] opacity-80">
+            <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#60CBED]"></div>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-1.5 animate-swipe-hint text-white">
+              <Hand size={14} className="text-[#60CBED]" /> Vuốt xem thêm
+            </span>
+            <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#60CBED]"></div>
+          </div>
+
           {/* 📱 MỚI 2: Snap Scrolling ngang trên điện thoại, Grid trên Desktop */}
           <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 gap-6 md:gap-x-12 md:gap-y-24 pb-8 md:pb-0 -mx-5 px-5 md:mx-0 md:px-0">
             {[
@@ -190,7 +210,6 @@ export default function AboutUs() {
       <section className="py-28 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FDB714]/10 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-5 grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
-
           <FadeIn className="relative order-2 md:order-1">
             <div className="absolute inset-0 bg-[#FDB714] rounded-[3rem] rotate-3 scale-105 opacity-20"></div>
             <img
@@ -206,10 +225,11 @@ export default function AboutUs() {
               </div>
             </div>
           </FadeIn>
-
+          
           <FadeIn delay={200} className="order-1 md:order-2">
+            {/* FIX SỐ 1: THAY ICON */}
             <div className="inline-flex items-center gap-2 bg-[#FDB714]/10 border border-[#FDB714]/40 text-[#003046] text-[10px] font-bold px-5 py-2 rounded-full uppercase mb-6 tracking-[0.2em] shadow-sm">
-              🤝 Thông điệp lãnh đạo
+              <HeartHandshake size={14} className="text-[#FDB714]" /> Thông điệp lãnh đạo
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-black text-[#003046] mb-8 leading-[1.05] tracking-tight">
               Hành trình tạo nên<br/>
@@ -231,15 +251,25 @@ export default function AboutUs() {
       </section>
 
       {/* ═══ ĐỘI NGŨ GIÁO VIÊN ═══ */}
-      <section className="py-20 md:py-28 bg-[#f8fcfd] max-w-7xl mx-auto md:px-5 md:rounded-[3rem] mb-24 md:border border-gray-100 md:shadow-[0_10px_30px_rgba(0,48,70,0.03)]">
+      <section className="py-20 md:py-28 bg-[#f8fcfd] max-w-7xl mx-auto md:px-5 md:rounded-[3rem] mb-24 md:border border-gray-100 md:shadow-[0_10px_30px_rgba(0,48,70,0.03)] relative">
         <FadeIn className="text-center mb-12 md:mb-20 px-5">
+          {/* FIX SỐ 1: THAY ICON */}
           <div className="inline-flex items-center gap-2 bg-white border border-[#60CBED]/30 text-[#003046] text-[10px] font-bold px-5 py-2 rounded-full uppercase mb-4 shadow-sm tracking-[0.2em]">
-            👨‍🏫 Đội ngũ chuyên gia
+            <GraduationCap size={14} className="text-[#60CBED]" /> Đội ngũ chuyên gia
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-black text-[#003046] tracking-tight">
             Người dẫn đường <span className="text-[#FDB714]">tận tâm.</span>
           </h2>
         </FadeIn>
+
+        {/* 📱 FIX SỐ 2: Tín hiệu vuốt ngang cực tinh tế cho Mobile (Đội ngũ giáo viên) */}
+        <div className="md:hidden flex items-center justify-center gap-3 mb-6 text-[#5a7a8a] opacity-80">
+          <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#5a7a8a]"></div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-1.5 animate-swipe-hint">
+            <Hand size={14} className="text-[#60CBED]" /> Vuốt xem thêm
+          </span>
+          <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#5a7a8a]"></div>
+        </div>
 
         {/* 📱 MỚI 2: Snap Scrolling ngang cho danh sách giáo viên */}
         <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-4 gap-6 pb-8 md:pb-0 px-5 md:px-0">
@@ -249,13 +279,13 @@ export default function AboutUs() {
                 <img src={teacher.img} alt={teacher.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" />
               ) : (
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 font-bold bg-gray-100">
-                  <div className="text-5xl mb-3 opacity-30">👤</div>
+                  {/* FIX SỐ 1: THAY ICON PLACEHOLDER */}
+                  <User size={48} className="opacity-30 mb-3" />
                   <div className="text-[10px] uppercase tracking-[0.2em] text-center px-4">Chưa cập nhật ảnh</div>
                 </div>
               )}
               <div className="absolute inset-0 bg-[#003046]/10 group-hover:bg-[#003046]/0 transition-colors z-10"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-[#003046] via-[#003046]/40 to-transparent z-20 opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
-
               <div className="absolute bottom-0 left-0 p-6 md:p-8 z-30 w-full transform group-hover:-translate-y-2 transition-transform duration-500">
                 <span className="bg-[#FDB714] text-[#003046] text-[10px] font-black px-4 py-2 rounded-full uppercase shadow-md tracking-[0.15em]">
                   {teacher.name.includes('David') ? 'Bản ngữ' : 'Việt Nam'}
@@ -276,7 +306,6 @@ export default function AboutUs() {
           <div className="bg-[#003046] rounded-[3rem] p-10 md:p-16 shadow-[0_30px_60px_rgba(0,48,70,0.2)] relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#FDB714] rounded-full blur-[100px] opacity-30 animate-pulse"></div>
             <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-[#60CBED] rounded-full blur-[100px] opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
-
             <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-4 relative z-10">
               {[
                 { number: '500+', label: 'Học viên tin tưởng.' },
@@ -298,12 +327,12 @@ export default function AboutUs() {
       <AnimatePresence>
         {isSheetOpen && (
           <div className="fixed inset-0 z-[1000] flex justify-end flex-col md:hidden">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-[#003046]/40 backdrop-blur-sm" 
+              className="absolute inset-0 bg-[#003046]/40 backdrop-blur-sm"
               onClick={() => setIsSheetOpen(false)}
             />
-            <motion.div 
+            <motion.div
               initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               drag="y" dragConstraints={{ top: 0 }} dragElastic={0.2}
@@ -314,13 +343,13 @@ export default function AboutUs() {
             >
               <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6 cursor-grab active:cursor-grabbing shrink-0" />
               <h4 className="text-2xl font-black text-[#003046] mb-6 tracking-tight">Tầm nhìn & Sứ mệnh</h4>
-              
+
               <div className="flex flex-col gap-3" onPointerDown={(e) => e.stopPropagation()}>
                 {visionData.map(tab => (
-                  <button 
-                    key={tab.id} 
+                  <button
+                    key={tab.id}
                     onClick={() => { setActiveTab(tab.id); setIsSheetOpen(false); }}
-                    className={`p-4 rounded-2xl font-bold text-left active:scale-95 transition-all border flex justify-between items-center
+                    className={`p-4 rounded-2xl font-bold text-left active:scale-95 transition-all border flex justify-between items-center 
                     ${activeTab === tab.id 
                       ? 'bg-[#FDB714]/10 border-[#FDB714] text-[#003046] shadow-sm' 
                       : 'bg-white border-gray-100 text-[#5a7a8a]'}`}
@@ -337,7 +366,7 @@ export default function AboutUs() {
 
       {/* 📱 MỚI 5: SMART CONTEXTUAL FAB */}
       <div className={`fixed bottom-0 left-0 right-0 z-[900] bg-white/90 backdrop-blur-xl border-t border-gray-100 p-4 px-5 flex items-center justify-between gap-4 transition-transform duration-300 md:hidden shadow-[0_-10px_40px_rgba(0,48,70,0.1)] 
-      ${isFabVisible && !isSheetOpen ? 'translate-y-0' : 'translate-y-full'}`}>
+        ${isFabVisible && !isSheetOpen ? 'translate-y-0' : 'translate-y-full'}`}>
         <div className="text-xs text-[#003046] font-bold tracking-tight">
           Đồng hành cùng Octo?<br/><strong className="text-[#FDB714] text-sm drop-shadow-sm">Đăng ký tư vấn ngay!</strong>
         </div>
@@ -345,7 +374,6 @@ export default function AboutUs() {
           Liên hệ ngay
         </Link>
       </div>
-
     </main>
   );
 }
