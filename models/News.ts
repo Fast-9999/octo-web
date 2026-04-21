@@ -23,6 +23,7 @@ const NewsSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+// Tránh lỗi overwrite model khi Next.js hot-reload
 const News = mongoose.models.News || mongoose.model<INews>('News', NewsSchema);
 
 export default News;

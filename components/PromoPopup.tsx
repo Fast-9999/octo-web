@@ -1,123 +1,95 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function PromoPopup() {
+  const [promo, setPromo] = useState<any>(null);
   const [isOpen, setIsOpen] = useState(false);
+  
+  // State mới để xử lý hiệu ứng trượt xuống khi đóng
+  const [isClosing, setIsClosing] = useState(false);
 
-  // Tự động mở popup sau khi load trang 2 giây
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 2000);
-    return () => clearTimeout(timer);
+    // Gọi API lấy data quảng cáo
+    const fetchPromo = async () => {
+      try {
+        const res = await fetch('/api/promo');
+        const data = await res.json();
+        
+        // Chỉ hiển thị nếu admin đang bật (isActive: true)
+        if (data && data.isActive) {
+          setPromo(data);
+          // Set timeout vài giây rồi mới hiện popup cho mượt
+          setTimeout(() => setIsOpen(true), 3000); 
+        }
+      } catch (error) {
+        console.error("Không tải được Popup:", error);
+      }
+    };
+    fetchPromo();
   }, []);
 
+  // Hàm xử lý đóng mượt mà (chờ animation xong mới unmount)
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 300); // Khớp với duration-300 của Tailwind
+  };
+
+  if (!isOpen || !promo) return null;
+
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-end md:items-center justify-center p-0 md:p-4">
-          
-          {/* Lớp nền mờ (Click để đóng) */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-[#003046]/80 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
-          />
+    // THAY ĐỔI: Thêm items-end p-4 trên mobile để tạo hiệu ứng Bottom Sheet, md:items-center để giữ modal giữa màn hình trên Desktop
+    <div className="fixed inset-0 z-[9999] flex items-end md:items-center justify-center bg-black/60 backdrop-blur-sm p-4 md:p-0 transition-opacity duration-300">
+      
+      {/* Container của Popup */}
+      {/* THAY ĐỔI: Đổi flex-col trên mobile, flex-row trên desktop. Thêm hiệu ứng translate-y trượt lên xuống */}
+      <div className={`relative flex flex-col md:flex-row bg-[#E83C3C] text-white rounded-[2rem] md:rounded-2xl overflow-hidden max-w-3xl w-full shadow-2xl transform transition-transform duration-300 ${isClosing ? 'translate-y-full md:translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
+        
+        {/* Nút đóng (Chuẩn Thumb-zone & Haptic Feedback) */}
+        {/* THAY ĐỔI: w-10 h-10 trên mobile, active:scale-90 để có phản hồi xúc giác */}
+        <button 
+          onClick={handleClose}
+          className="absolute top-4 right-4 z-20 w-10 h-10 md:w-8 md:h-8 bg-black/20 md:bg-white text-white md:text-black rounded-full flex items-center justify-center font-bold backdrop-blur-md md:backdrop-blur-none active:scale-90 transition-transform"
+        >
+          ✕
+        </button>
 
-          {/* 💻 GIAO DIỆN DESKTOP (Popup Modal giữa màn hình) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative hidden md:flex bg-[#E53935] rounded-3xl w-full max-w-3xl flex-row overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] z-10"
-          >
-            {/* Nút Tắt (X) */}
-            <button 
-              onClick={() => setIsOpen(false)}
-              // 📱 MỚI 4: Gắn active:scale-95
-              className="absolute top-4 right-4 z-50 w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#E53935] font-black hover:scale-110 active:scale-95 transition-transform shadow-md"
-            >
-              ✕
-            </button>
-
-            {/* Nền trang trí */}
-            <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #fff 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
-
-            {/* Cột trái: Chữ và Ưu đãi */}
-            <div className="relative z-10 w-3/5 p-10 flex flex-col justify-center text-white">
-              <div className="font-black text-2xl mb-4 tracking-tighter">octo<span className="text-[#FDB714]">.</span></div>
-              <h2 className="text-3xl font-black mb-4 leading-tight uppercase">Khai giảng các lớp <br /> trong tháng 4</h2>
-              <p className="text-sm font-bold mb-2 opacity-90">Đăng ký ngay hôm nay</p>
-              <p className="text-sm font-medium mb-1">để nhận học bổng lên đến</p>
-              <div className="text-7xl font-black text-white drop-shadow-md leading-none mb-1">30%</div>
-              <p className="text-sm font-bold mb-8 opacity-90">từ SANTA OCTO.</p>
-              <a 
-                href="https://www.facebook.com/hp.octo" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}
-                // 📱 MỚI 4: Gắn active:scale-95
-                className="inline-block w-fit bg-[#003046] border-2 border-[#60CBED] text-white font-black text-sm px-8 py-3 rounded-full hover:bg-[#60CBED] hover:text-[#003046] active:scale-95 transition-all shadow-lg uppercase tracking-wider"
-              >
-                Đến ngay
-              </a>
-            </div>
-
-            {/* Cột phải: Hình ảnh */}
-            <div className="relative z-10 w-2/5 bg-gradient-to-t from-[#c62828] to-transparent">
-              <img src="https://octo.vn/img_data/images/hinhanh/Web%20teen%204.png" alt="Santa Octo Promo" className="w-full h-full object-cover opacity-90 mix-blend-luminosity" />
-            </div>
-          </motion.div>
-
-
-          {/* 📱 MỚI 1: GIAO DIỆN MOBILE (Bottom Sheet) */}
-          <motion.div 
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            drag="y"
-            dragConstraints={{ top: 0 }}
-            dragElastic={0.2}
-            onDragEnd={(e, { offset, velocity }) => {
-              if (offset.y > 100 || velocity.y > 500) setIsOpen(false); // Vuốt xuống để tắt
-            }}
-            className="relative md:hidden w-full bg-[#E53935] rounded-t-[2.5rem] flex flex-col overflow-hidden shadow-[0_-20px_50px_rgba(0,0,0,0.3)] z-10 pt-4"
-          >
-            {/* Thanh vuốt ngang (Handle) */}
-            <div className="w-12 h-1.5 bg-white/50 rounded-full mx-auto mb-4 cursor-grab active:cursor-grabbing relative z-20" />
-
-            {/* Nút Tắt (X) cho Mobile */}
-            <button 
-              onClick={() => setIsOpen(false)}
-              className="absolute top-6 right-6 z-50 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-black active:scale-90 transition-transform backdrop-blur-sm"
-            >
-              ✕
-            </button>
-
-            {/* Nền trang trí */}
-            <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #fff 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
-
-            <div className="relative z-10 w-full p-8 pt-4 flex flex-col justify-center text-white text-center">
-              <div className="font-black text-xl mb-4 tracking-tighter opacity-80">octo<span className="text-[#FDB714]">.</span></div>
-              <h2 className="text-2xl font-black mb-3 leading-tight uppercase">Khai giảng <br /> tháng 4</h2>
-              <p className="text-xs font-bold mb-1 opacity-90">Nhận học bổng lên đến</p>
-              <div className="text-6xl font-black text-[#FDB714] drop-shadow-md leading-none mb-2">30%</div>
-              <p className="text-[10px] font-bold mb-8 opacity-70 tracking-widest">TỪ SANTA OCTO.</p>
-              <a 
-                href="https://www.facebook.com/hp.octo" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}
-                // 📱 MỚI 4: Gắn active:scale-95
-                className="block w-full bg-[#003046] border-2 border-[#60CBED] text-white font-black text-sm py-4 rounded-2xl active:scale-95 transition-all shadow-lg uppercase tracking-wider"
-              >
-                Nhận ưu đãi ngay
-              </a>
-            </div>
-          </motion.div>
-
+        {/* Cột phải: Hình ảnh (Đưa lên TRÊN CÙNG trên thiết bị di động bằng order-1) */}
+        <div className="w-full md:w-1/2 relative h-[200px] md:min-h-[350px] order-1 md:order-2">
+           {promo.imageUrl ? (
+             <Image 
+               src={promo.imageUrl} 
+               alt="Promo" 
+               fill 
+               className="object-cover" 
+             />
+           ) : (
+             <div className="w-full h-full bg-white/10"></div>
+           )}
+           {/* Phủ một lớp đen mờ ở viền trên ảnh để nút Close màu trắng dễ nhìn hơn trên mobile */}
+           <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/40 to-transparent md:hidden"></div>
         </div>
-      )}
-    </AnimatePresence>
+
+        {/* Cột trái: Nội dung (Nằm DƯỚI trên di động bằng order-2) */}
+        <div className="p-6 pb-8 md:p-8 w-full md:w-1/2 flex flex-col justify-center order-2 md:order-1">
+          <h2 className="text-2xl md:text-3xl font-black mb-2 md:mb-4 uppercase leading-tight">{promo.title}</h2>
+          <p className="mb-4 md:mb-2 text-sm opacity-90">{promo.subtitle}</p>
+          <div className="text-5xl md:text-6xl font-black mb-6 md:mb-8 drop-shadow-md">{promo.discountText}</div>
+          
+          {/* Nút CTA (Chuẩn Thumb-zone: w-full py-4 trên mobile & Haptic Feedback active:scale-95) */}
+          <a 
+            href={promo.buttonLink} 
+            onClick={handleClose}
+            className="bg-[#003046] text-white px-8 py-4 md:py-3 rounded-full font-bold text-center w-full md:w-max active:scale-95 transition-transform duration-150 shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
+          >
+            {promo.buttonText}
+          </a>
+        </div>
+
+      </div>
+    </div>
   );
 }

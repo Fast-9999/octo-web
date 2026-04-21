@@ -10,12 +10,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Danh sách menu của Admin
+  // Danh sách menu của Admin (ĐÃ THÊM QUẢN LÝ POPUP)
   const menuItems = [
     { name: 'Tổng quan', path: '/admin', icon: '📊' },
     { name: 'Quản lý Khách hàng', path: '/admin/leads', icon: '👥' },
     { name: 'Quản lý Khóa học', path: '/admin/courses', icon: '📚' },
     { name: 'Quản lý Tin tức', path: '/admin/news', icon: '📰' },
+    { name: 'Quản lý Popup', path: '/admin/promo', icon: '📢' },
     { name: 'Cài đặt', path: '/admin/settings', icon: '⚙️' },
   ];
 
