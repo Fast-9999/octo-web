@@ -23,7 +23,7 @@ export default function Footer() {
             />
           </Link>
           <p className="text-sm leading-relaxed max-w-[280px] font-medium">
-            Trung tâm tiếng Anh tại Vinhomes Grand Park – TP. Thủ Đức. Ngoại ngữ toàn diện trong môi trường học <span className="text-[#60CBED] font-bold">thật chill.</span>
+            Hệ thống đào tạo tiếng Anh toàn diện. Mang đến môi trường học tập hiện đại, sáng tạo và <span className="text-[#60CBED] font-bold">thật chill.</span>
           </p>
         </div>
 
@@ -32,7 +32,6 @@ export default function Footer() {
           <h5 className="font-black text-white mb-5 uppercase tracking-widest text-sm">Khóa học.</h5>
           <ul className="space-y-4 text-sm font-medium">
             <li>
-              {/* 📱 MỚI 4: Gắn active:scale-95 */}
               <Link href="/khoa-hoc" className="inline-block active:scale-95 hover:text-[#FDB714] hover:translate-x-2 transition-all duration-300">Tiếng Anh Thiếu Nhi.</Link>
             </li>
             <li>
@@ -49,7 +48,6 @@ export default function Footer() {
           <h5 className="font-black text-white mb-5 uppercase tracking-widest text-sm">Về chúng tôi.</h5>
           <ul className="space-y-4 text-sm font-medium">
             <li>
-              {/* 📱 MỚI 4: Gắn active:scale-95 */}
               <Link href="/ve-chung-toi" className="inline-block active:scale-95 hover:text-[#60CBED] hover:translate-x-2 transition-all duration-300">Giới thiệu.</Link>
             </li>
             <li>
@@ -61,39 +59,57 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Cột 4: Liên hệ */}
+        {/* Cột 4: Liên hệ (Đã update 2 Cơ sở chuẩn Godly) */}
         <div className="sm:col-span-2 lg:col-span-1 mt-4 lg:mt-0">
           <h5 className="font-black text-white mb-5 uppercase tracking-widest text-sm">Liên hệ.</h5>
           <ul className="space-y-5 text-sm font-medium">
-            <li className="flex items-start gap-3">
-              {/* 💡 ĐÃ CẬP NHẬT: Icon SVG sang trọng thay cho Emoji phèn */}
-              <span className="text-[#FDB714] shrink-0 mt-0.5">
+            
+            {/* 📍 CƠ SỞ 1 */}
+            <li className="flex items-start gap-3 group cursor-default">
+              <span className="text-[#FDB714] shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                 </svg>
               </span>
-              <span className="leading-relaxed">45 đường D2A, khu Manhattan – Vinhomes Grand Park.</span>
+              <div className="leading-relaxed">
+                <span className="block text-[#60CBED] text-[10px] uppercase font-black tracking-widest mb-0.5">Cơ sở 1</span>
+                <span className="group-hover:text-white transition-colors duration-300">45 đường D2A, khu Manhattan – Vinhomes Grand Park, TP. Thủ Đức.</span>
+              </div>
             </li>
+
+            {/* 📍 CƠ SỞ 2 */}
+            <li className="flex items-start gap-3 group cursor-default">
+              <span className="text-[#FDB714] shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+              </span>
+              <div className="leading-relaxed">
+                <span className="block text-[#60CBED] text-[10px] uppercase font-black tracking-widest mb-0.5">Cơ sở 2</span>
+                <span className="group-hover:text-white transition-colors duration-300">KTX Đại học Luật CS3, Phường Long Phước, TP. Thủ Đức.</span>
+              </div>
+            </li>
+
+            {/* 📞 HOTLINE */}
             <li className="flex items-center gap-3">
-              {/* 💡 ĐÃ CẬP NHẬT: Icon SVG sang trọng */}
               <span className="text-[#FDB714] shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.48-4.18-7.076-7.076l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                 </svg>
               </span>
-              {/* 📱 MỚI 4: Gắn active:scale-95 */}
-              <a href="tel:0909964296" className="active:scale-95 hover:text-[#60CBED] transition-all inline-block">0909 964 296.</a>
+              <a href="tel:0909964296" className="active:scale-95 hover:text-[#60CBED] transition-all inline-block font-bold">0909 964 296</a>
             </li>
+
+            {/* ✉️ EMAIL */}
             <li className="flex items-center gap-3">
-              {/* 💡 ĐÃ CẬP NHẬT: Icon SVG sang trọng */}
               <span className="text-[#FDB714] shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                 </svg>
               </span>
-              {/* 📱 MỚI 4: Gắn active:scale-95 */}
-              <a href="mailto:services@octo.vn" className="active:scale-95 hover:text-[#60CBED] transition-all inline-block">services@octo.vn.</a>
+              <a href="mailto:services@octo.vn" className="active:scale-95 hover:text-[#60CBED] transition-all inline-block">services@octo.vn</a>
             </li>
           </ul>
         </div>
