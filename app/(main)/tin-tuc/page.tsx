@@ -2,12 +2,14 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+// 🚀 MỚI: Import icon ChevronDown từ lucide-react
+import { ChevronDown } from 'lucide-react';
 
 // 💡 HIỆU ỨNG NỞ RA (SCALE) CHUẨN GODLY
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
-
+  
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
@@ -19,7 +21,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
     if (currentRef) observer.observe(currentRef);
     return () => { if (currentRef) observer.unobserve(currentRef); };
   }, []);
-
+  
   return (
     <div
       ref={domRef}
@@ -47,16 +49,16 @@ export default function PublicNewsPage() {
   const [newsList, setNewsList] = useState<News[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('Tất cả');
-  
+
   // 🚀 MỚI: Logic nút Xem Thêm (Load More)
   const ITEMS_PER_PAGE = 6; // Hiện mặc định 6 bài
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
-
+  
   // 📱 State cho Bottom Sheet và Smart FAB
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isFabVisible, setIsFabVisible] = useState(false);
   const lastScrollY = useRef(0);
-
+  
   // Logic nhận diện vuốt tay để ẩn/hiện FAB
   useEffect(() => {
     const handleScroll = () => {
@@ -73,7 +75,7 @@ export default function PublicNewsPage() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  
   // LẤY DỮ LIỆU TỪ SPRING BOOT
   useEffect(() => {
     const fetchNews = async () => {
@@ -93,36 +95,36 @@ export default function PublicNewsPage() {
     };
     fetchNews();
   }, []);
-
+  
   // Format ngày tháng hiển thị cho đẹp
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
-
+  
   // LOGIC LỌC BÀI VIẾT THEO TAB
   const filteredNews = useMemo(() => {
     if (activeTab === 'Tất cả') return newsList;
     return newsList.filter(news => (news.tag || 'Tin tức') === activeTab);
   }, [newsList, activeTab]);
-
+  
   // 🚀 MỚI: Lấy danh sách bài viết đang được phép hiển thị
   const displayedNews = filteredNews.slice(0, visibleCount);
-
+  
   // 🚀 MỚI: Xử lý khi đổi Tab (Reset số lượng bài về mặc định)
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     setVisibleCount(ITEMS_PER_PAGE); // Đổi tab thì reset lại hiển thị 6 bài đầu
     setIsSheetOpen(false); // Ẩn bottom sheet trên mobile
   };
-
+  
   return (
     <main className="font-sans bg-[#f8fcfd] min-h-screen pt-32 pb-24 relative overflow-x-hidden">
       {/* 💡 Ánh sáng nền ảo diệu */}
       <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#60CBED]/20 blur-[150px] rounded-full pointer-events-none z-0 animate-pulse"></div>
-
       <div className="max-w-7xl mx-auto px-5 relative z-10">
+        
         {/* ═══ HEADER ═══ */}
         <FadeIn className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-white border border-[#60CBED]/30 text-[#003046] text-[10px] font-bold px-5 py-2 rounded-full uppercase tracking-[0.2em] mb-6 shadow-sm">
@@ -139,7 +141,6 @@ export default function PublicNewsPage() {
 
         {/* ═══ TABS BỘ LỌC ═══ */}
         <FadeIn delay={100} className="flex flex-col md:flex-row justify-center mb-12 md:mb-20 relative z-20">
-          
           {/* 📱 HIỂN THỊ DESKTOP: Các tab inline */}
           <div className="hidden md:inline-flex bg-white/70 backdrop-blur-xl backdrop-saturate-150 border border-white/50 p-2 rounded-full shadow-[0_10px_30px_rgba(0,48,70,0.05)] gap-2 flex-wrap justify-center">
             {['Tất cả', 'Thông báo', 'Sự kiện', 'Kinh nghiệm'].map((tab) => (
@@ -156,7 +157,7 @@ export default function PublicNewsPage() {
               </button>
             ))}
           </div>
-
+          
           {/* 📱 HIỂN THỊ MOBILE: Nút mở Bottom Sheet Chọn danh mục */}
           <div className="md:hidden w-full max-w-md mx-auto">
             <button
@@ -187,14 +188,13 @@ export default function PublicNewsPage() {
           </FadeIn>
         ) : (
           <>
-            {/* Vòng lặp map danh sách hiển thị (displayedNews) thay vì tất cả (filteredNews) */}
+            {/* Vòng lặp map danh sách hiển thị */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {displayedNews.map((item, index) => (
                 <FadeIn key={item._id} delay={(index % ITEMS_PER_PAGE) * 100} className="bg-white rounded-[2.5rem] p-4 border border-[#60CBED]/10 shadow-[0_10px_30px_rgba(0,48,70,0.03)] hover:shadow-[0_20px_50px_rgba(96,203,237,0.15)] hover:-translate-y-2 transition-all duration-500 group flex flex-col relative overflow-hidden">
-                  
                   {/* Viền ảo khi hover */}
                   <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#60CBED]/30 rounded-[2.5rem] transition-colors pointer-events-none z-20"></div>
-
+                  
                   {/* Ảnh bìa */}
                   <Link href={`/tin-tuc/${item._id}`} className="relative h-[240px] w-full overflow-hidden rounded-[2rem] bg-gray-100 block shrink-0 z-10">
                     <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-md text-[#003046] text-[10px] font-black px-4 py-2 rounded-full uppercase shadow-md tracking-[0.15em] border border-white/50">
@@ -202,7 +202,7 @@ export default function PublicNewsPage() {
                     </div>
                     <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]" />
                   </Link>
-                  
+
                   {/* Nội dung */}
                   <div className="pt-8 px-4 pb-4 flex flex-col flex-1 z-10">
                     <div className="flex items-center gap-3 text-[10px] font-bold text-[#5a7a8a] mb-4 uppercase tracking-widest">
@@ -225,14 +225,21 @@ export default function PublicNewsPage() {
               ))}
             </div>
 
-            {/* 🚀 MỚI: NÚT XEM THÊM (Chỉ hiện khi số bài đang hiển thị nhỏ hơn tổng số bài) */}
+            {/* 🚀 MỚI: NÚT XEM THÊM (Tối ưu chuẩn Mobbin Mobile & Godly PC) */}
             {visibleCount < filteredNews.length && (
-              <div className="flex justify-center mt-12 md:mt-16">
+              <div className="flex justify-center mt-12 md:mt-16 w-full px-5 md:px-0">
                 <button
                   onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
-                  className="bg-white border-2 border-[#60CBED]/30 text-[#003046] font-black px-8 py-4 rounded-full hover:bg-[#f0faff] hover:border-[#60CBED] hover:shadow-[0_10px_25px_rgba(96,203,237,0.2)] active:scale-95 transition-all uppercase tracking-[0.15em] text-xs flex items-center gap-3"
+                  className="group w-full md:w-auto bg-white border border-[#60CBED]/20 text-[#003046] font-black px-10 py-4.5 rounded-[1.25rem] md:rounded-full hover:bg-[#f8fcfd] hover:border-[#60CBED]/60 shadow-[0_5px_15px_rgba(0,48,70,0.03)] hover:shadow-[0_15px_35px_rgba(96,203,237,0.15)] active:scale-95 transition-all duration-500 uppercase tracking-[0.15em] text-[11px] md:text-xs flex justify-center items-center gap-3 relative overflow-hidden"
                 >
-                  Xem thêm bài viết <span className="text-[#FDB714] text-lg font-normal">▼</span>
+                  {/* Hiệu ứng tia sáng lướt qua cực mượt trên PC */}
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 group-hover:-translate-x-full translate-x-full transition-all duration-1000 ease-in-out pointer-events-none z-0"></div>
+                  
+                  <span className="relative z-10">Xem thêm bài viết</span>
+                  <ChevronDown 
+                    className="w-4 h-4 text-[#FDB714] relative z-10 group-hover:translate-y-1 transition-transform duration-300" 
+                    strokeWidth={3} 
+                  />
                 </button>
               </div>
             )}
